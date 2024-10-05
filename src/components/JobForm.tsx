@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, SelectChangeEvent } from '@mui/material';
+import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, SelectChangeEvent, CircularProgress, Snackbar } from '@mui/material';
 import { JobApplication } from '../types/JobApplication';
 import axios from 'axios';
 
@@ -21,6 +21,8 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
     contactInfoFollowUp: '',
     notes: '',
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
@@ -33,6 +35,7 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
           setFormData(response.data);
         } catch (error) {
           console.error('Error fetching job application:', error);
+          setError('Failed to fetch job application');
         }
       };
       fetchJob();
@@ -48,15 +51,25 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
+    console.log('Submitting form data:', formData);
     try {
+      let response;
       if (id) {
-        await axios.put(`${API_URL}/job-applications/${id}`, formData);
+        console.log('Updating existing job application');
+        response = await axios.put(`${API_URL}/job-applications/${id}`, formData);
       } else {
-        await axios.post(`${API_URL}/job-applications`, formData);
+        console.log('Creating new job application');
+        response = await axios.post(`${API_URL}/job-applications`, formData);
       }
+      console.log('API response:', response.data);
       navigate('/');
     } catch (error) {
       console.error('Error saving job application:', error);
+      setError('Failed to save job application. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,6 +83,7 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
         onChange={handleChange}
         InputLabelProps={{ shrink: true }}
         fullWidth
+        required
       />
       <TextField
         name="companyName"
@@ -77,6 +91,7 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
         value={formData.companyName}
         onChange={handleChange}
         fullWidth
+        required
       />
       <TextField
         name="position"
@@ -84,6 +99,7 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
         value={formData.position}
         onChange={handleChange}
         fullWidth
+        required
       />
       <TextField
         name="jobNumber"
@@ -99,7 +115,7 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
         onChange={handleChange}
         fullWidth
       />
-      <FormControl fullWidth>
+      <FormControl fullWidth required>
         <InputLabel>Status</InputLabel>
         <Select
           name="status"
@@ -129,9 +145,15 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
         rows={4}
         fullWidth
       />
-      <Button type="submit" variant="contained" color="primary">
-        {id ? 'Update' : 'Create'} Job Application
+      <Button type="submit" variant="contained" color="primary" disabled={loading}>
+        {loading ? <CircularProgress size={24} /> : (id ? 'Update' : 'Create')} Job Application
       </Button>
+      <Snackbar
+        open={!!error}
+        autoHideDuration={6000}
+        onClose={() => setError(null)}
+        message={error}
+      />
     </Box>
   );
 };

@@ -20,19 +20,30 @@ This is a React-based frontend application for managing job applications. It all
    npm install
    ```
 
-3. Set up the backend:
-   - Ensure that the backend server is running and accessible at `http://localhost:8080/api`.
-   - If your backend is running on a different URL, update the `API_URL` constant in the following files:
-     - `src/components/JobForm.tsx`
-     - `src/components/JobList.tsx`
-     - `src/components/JobDetails.tsx`
-
-4. Start the development server:
+3. Start the development server:
    ```
    npm start
    ```
 
-5. Open your browser and navigate to `http://localhost:3000` to view the application.
+4. Open your browser and navigate to `http://localhost:3000` to view the application.
+
+## Backend Configuration
+
+The backend has been updated to allow CORS requests from the frontend. After making changes to the backend:
+
+1. Restart the backend server:
+   - If you're using Maven, run:
+     ```
+     ./mvnw
+     ```
+   - If you're using Gradle, run:
+     ```
+     ./gradlew bootRun
+     ```
+
+2. Once the backend server has restarted, refresh your frontend application in the browser.
+
+3. Try creating a new job application. If you encounter any issues, check the browser console for error messages and ensure that the backend server is running correctly.
 
 ## Features
 
@@ -42,12 +53,14 @@ This is a React-based frontend application for managing job applications. It all
 - Edit an existing job application
 - Delete a job application
 
-## Technologies Used
+## Troubleshooting
 
-- React
-- React Router
-- Material-UI
-- Axios for API calls
+If you encounter any issues:
+
+1. Ensure both frontend and backend servers are running.
+2. Check the browser console for any error messages.
+3. Verify that the backend server is accessible at `http://localhost:8080/api`.
+4. If you make any changes to the backend, remember to restart the backend server.
 
 ## Project Structure
 
@@ -57,16 +70,6 @@ This is a React-based frontend application for managing job applications. It all
   - `JobDetails.tsx`: Displays details of a specific job application
 - `src/types/`: Contains TypeScript type definitions
 - `src/App.tsx`: Main component with routing setup
-
-## API Integration
-
-This frontend application is designed to work with a RESTful API backend. Ensure that your backend provides the following endpoints:
-
-- GET `/api/job-applications`: Fetch all job applications
-- GET `/api/job-applications/:id`: Fetch a specific job application
-- POST `/api/job-applications`: Create a new job application
-- PUT `/api/job-applications/:id`: Update an existing job application
-- DELETE `/api/job-applications/:id`: Delete a job application
 
 ## Contributing
 
