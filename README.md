@@ -1,46 +1,77 @@
-# Getting Started with Create React App
+# Job Search Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a React-based frontend application for managing job applications. It allows users to create, view, edit, and delete job applications.
 
-## Available Scripts
+## Prerequisites
 
-In the project directory, you can run:
+- Node.js (v14 or later)
+- npm (v6 or later)
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Clone the repository:
+   ```
+   git clone <repository-url>
+   cd job_front
+   ```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-### `npm test`
+3. Set up the backend:
+   - Ensure that the backend server is running and accessible at `http://localhost:8080/api`.
+   - If your backend is running on a different URL, update the `API_URL` constant in the following files:
+     - `src/components/JobForm.tsx`
+     - `src/components/JobList.tsx`
+     - `src/components/JobDetails.tsx`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. Start the development server:
+   ```
+   npm start
+   ```
 
-### `npm run build`
+5. Open your browser and navigate to `http://localhost:3000` to view the application.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- View a list of all job applications
+- Create a new job application
+- View details of a specific job application
+- Edit an existing job application
+- Delete a job application
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Technologies Used
 
-### `npm run eject`
+- React
+- React Router
+- Material-UI
+- Axios for API calls
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Project Structure
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- `src/components/`: Contains all React components
+  - `JobList.tsx`: Displays the list of job applications
+  - `JobForm.tsx`: Form for creating and editing job applications
+  - `JobDetails.tsx`: Displays details of a specific job application
+- `src/types/`: Contains TypeScript type definitions
+- `src/App.tsx`: Main component with routing setup
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## API Integration
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+This frontend application is designed to work with a RESTful API backend. Ensure that your backend provides the following endpoints:
 
-## Learn More
+- GET `/api/job-applications`: Fetch all job applications
+- GET `/api/job-applications/:id`: Fetch a specific job application
+- POST `/api/job-applications`: Create a new job application
+- PUT `/api/job-applications/:id`: Update an existing job application
+- DELETE `/api/job-applications/:id`: Delete a job application
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Contributing
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE.md file for details.
