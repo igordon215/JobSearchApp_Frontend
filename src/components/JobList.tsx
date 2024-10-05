@@ -2,22 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 import { JobApplication } from '../types/JobApplication';
-import { fetchJobApplications } from '../services/jobApplicationService';
+import axios from 'axios';
+
+const API_URL = 'http://localhost:8080/api'; // Adjust this URL to match your backend API
 
 const JobList: React.FC = () => {
   const [jobApplications, setJobApplications] = useState<JobApplication[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getJobApplications = async () => {
+    const fetchJobApplications = async () => {
       try {
-        const applications = await fetchJobApplications();
-        setJobApplications(applications);
+        const response = await axios.get(`${API_URL}/job-applications`);
+        setJobApplications(response.data);
       } catch (error) {
         console.error('Error fetching job applications:', error);
       }
     };
-    getJobApplications();
+    fetchJobApplications();
   }, []);
 
   const handleView = (id: number) => {

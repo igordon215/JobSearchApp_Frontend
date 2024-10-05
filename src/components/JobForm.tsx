@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, SelectChangeEvent } from '@mui/material';
 import { JobApplication } from '../types/JobApplication';
-import { createJobApplication, updateJobApplication } from '../services/jobApplicationService';
+import axios from 'axios';
+
+const API_URL = 'http://localhost:8080/api'; // Adjust this URL to match your backend API
 
 interface JobFormProps {
   job?: JobApplication;
-  onSubmit: () => void;
 }
 
-const JobForm: React.FC<JobFormProps> = ({ job, onSubmit }) => {
+const JobForm: React.FC<JobFormProps> = ({ job }) => {
   const [formData, setFormData] = useState<Partial<JobApplication>>({
     dateApplied: '',
     companyName: '',
@@ -20,25 +22,42 @@ const JobForm: React.FC<JobFormProps> = ({ job, onSubmit }) => {
     notes: '',
   });
 
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+
   useEffect(() => {
-    if (job) {
+    if (id) {
+      const fetchJob = async () => {
+        try {
+          const response = await axios.get(`${API_URL}/job-applications/${id}`);
+          setFormData(response.data);
+        } catch (error) {
+          console.error('Error fetching job application:', error);
+        }
+      };
+      fetchJob();
+    } else if (job) {
       setFormData(job);
     }
-  }, [job]);
+  }, [id, job]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name as string]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (job) {
-      await updateJobApplication({ ...formData, id: job.id } as JobApplication);
-    } else {
-      await createJobApplication(formData as Omit<JobApplication, 'id'>);
+    try {
+      if (id) {
+        await axios.put(`${API_URL}/job-applications/${id}`, formData);
+      } else {
+        await axios.post(`${API_URL}/job-applications`, formData);
+      }
+      navigate('/');
+    } catch (error) {
+      console.error('Error saving job application:', error);
     }
-    onSubmit();
   };
 
   return (
@@ -111,7 +130,7 @@ const JobForm: React.FC<JobFormProps> = ({ job, onSubmit }) => {
         fullWidth
       />
       <Button type="submit" variant="contained" color="primary">
-        {job ? 'Update' : 'Create'} Job Application
+        {id ? 'Update' : 'Create'} Job Application
       </Button>
     </Box>
   );
