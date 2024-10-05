@@ -1,21 +1,37 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 import { JobApplication } from '../types/JobApplication';
-import { fetchJobApplications } from '../services/jobApplicationService';
+import axios from 'axios';
+
+const API_URL = 'http://localhost:8080/api'; // Adjust this URL to match your backend API
 
 const JobList: React.FC = () => {
   const [jobApplications, setJobApplications] = useState<JobApplication[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const getJobApplications = async () => {
-      const applications = await fetchJobApplications();
-      setJobApplications(applications);
+    const fetchJobApplications = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/job-applications`);
+        setJobApplications(response.data);
+      } catch (error) {
+        console.error('Error fetching job applications:', error);
+      }
     };
-    getJobApplications();
+    fetchJobApplications();
   }, []);
 
+  const handleView = (id: number) => {
+    navigate(`/details/${id}`);
+  };
+
+  const handleEdit = (id: number) => {
+    navigate(`/edit/${id}`);
+  };
+
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className="job-list">
       <Table>
         <TableHead>
           <TableRow>
@@ -34,10 +50,10 @@ const JobList: React.FC = () => {
               <TableCell>{job.position}</TableCell>
               <TableCell>{job.status}</TableCell>
               <TableCell>
-                <Button variant="contained" color="primary" size="small">
+                <Button variant="contained" color="primary" size="small" onClick={() => handleView(job.id)}>
                   View
                 </Button>
-                <Button variant="contained" color="secondary" size="small">
+                <Button variant="contained" color="secondary" size="small" onClick={() => handleEdit(job.id)} style={{ marginLeft: '8px' }}>
                   Edit
                 </Button>
               </TableCell>

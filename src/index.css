@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.container {
+  padding: 20px;
+}
+
+.job-list {
+  margin-top: 20px;
+}
+
+.job-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.job-details {
+  max-width: 800px;
+  margin: 0 auto;
+}
