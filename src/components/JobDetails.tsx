@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Card, CardContent, Typography, Button, Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CircularProgress, Snackbar, Alert, Grid, Chip } from '@mui/material';
+import { Paper, Typography, Button, Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CircularProgress, Snackbar, Alert, Grid, Chip, Divider } from '@mui/material';
+import { Edit as EditIcon, Delete as DeleteIcon, ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 import { JobApplication } from '../types/JobApplication';
 import axios from 'axios';
 
@@ -90,69 +91,68 @@ const JobDetails: React.FC = () => {
 
   return (
     <>
-      <Card className="job-details fade-in">
-        <CardContent>
-          <Typography variant="h4" component="h1" gutterBottom>
-            {job.position}
-          </Typography>
-          <Typography variant="h5" color="text.secondary" gutterBottom>
-            {job.companyName}
-          </Typography>
-          <Chip
-            label={job.status}
-            color={getStatusColor(job.status)}
-            sx={{ mt: 1, mb: 2 }}
-          />
-          <Grid container spacing={2} sx={{ mt: 2 }}>
+      <Paper elevation={3} sx={{ maxWidth: 800, margin: 'auto', mt: 4, p: 4 }} className="job-details fade-in">
+        <Typography variant="h4" component="h1" gutterBottom color="primary" fontWeight="bold">
+          {job.position}
+        </Typography>
+        <Typography variant="h5" color="text.secondary" gutterBottom>
+          {job.companyName}
+        </Typography>
+        <Chip
+          label={job.status}
+          color={getStatusColor(job.status)}
+          sx={{ mt: 1, mb: 3 }}
+        />
+        <Divider sx={{ my: 3 }} />
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body1">
+              <strong>Date Applied:</strong> {new Date(job.dateApplied).toLocaleDateString()}
+            </Typography>
+          </Grid>
+          {job.jobNumber && (
             <Grid item xs={12} sm={6}>
               <Typography variant="body1">
-                <strong>Date Applied:</strong> {new Date(job.dateApplied).toLocaleDateString()}
+                <strong>Job Number:</strong> {job.jobNumber}
               </Typography>
             </Grid>
-            {job.jobNumber && (
-              <Grid item xs={12} sm={6}>
-                <Typography variant="body1">
-                  <strong>Job Number:</strong> {job.jobNumber}
-                </Typography>
-              </Grid>
-            )}
-            {job.website && (
-              <Grid item xs={12}>
-                <Typography variant="body1">
-                  <strong>Website:</strong> <a href={job.website} target="_blank" rel="noopener noreferrer">{job.website}</a>
-                </Typography>
-              </Grid>
-            )}
-          </Grid>
-          {job.contactInfoFollowUp && (
-            <Box mt={2}>
-              <Typography variant="body1">
-                <strong>Contact Info / Follow Up:</strong>
-              </Typography>
-              <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>{job.contactInfoFollowUp}</Typography>
-            </Box>
           )}
-          {job.notes && (
-            <Box mt={2}>
+          {job.website && (
+            <Grid item xs={12}>
               <Typography variant="body1">
-                <strong>Notes:</strong>
+                <strong>Website:</strong> <a href={job.website} target="_blank" rel="noopener noreferrer">{job.website}</a>
               </Typography>
-              <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>{job.notes}</Typography>
-            </Box>
+            </Grid>
           )}
-          <Box mt={3} display="flex" justifyContent="flex-end">
-            <Button variant="contained" color="primary" onClick={handleEdit} sx={{ mr: 1 }}>
-              Edit
-            </Button>
-            <Button variant="outlined" color="secondary" onClick={handleClose} sx={{ mr: 1 }}>
-              Back to List
-            </Button>
-            <Button variant="outlined" color="error" onClick={handleOpenDialog}>
-              Delete
-            </Button>
+        </Grid>
+        {job.contactInfoFollowUp && (
+          <Box mt={3}>
+            <Typography variant="h6" gutterBottom>
+              Contact Info / Follow Up
+            </Typography>
+            <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>{job.contactInfoFollowUp}</Typography>
           </Box>
-        </CardContent>
-      </Card>
+        )}
+        {job.notes && (
+          <Box mt={3}>
+            <Typography variant="h6" gutterBottom>
+              Notes
+            </Typography>
+            <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>{job.notes}</Typography>
+          </Box>
+        )}
+        <Box mt={4} display="flex" justifyContent="flex-end">
+          <Button variant="contained" color="primary" onClick={handleEdit} startIcon={<EditIcon />} sx={{ mr: 1 }}>
+            Edit
+          </Button>
+          <Button variant="outlined" color="secondary" onClick={handleClose} startIcon={<ArrowBackIcon />} sx={{ mr: 1 }}>
+            Back to List
+          </Button>
+          <Button variant="outlined" color="error" onClick={handleOpenDialog} startIcon={<DeleteIcon />}>
+            Delete
+          </Button>
+        </Box>
+      </Paper>
 
       <Dialog
         open={openDialog}
