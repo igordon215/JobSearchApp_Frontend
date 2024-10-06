@@ -130,9 +130,10 @@ const JobForm: React.FC<JobFormProps> = ({ job }) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControl fullWidth required>
-                <InputLabel>Status</InputLabel>
+              <FormControl fullWidth required sx={{ '& .MuiInputLabel-root': { position: 'relative', transform: 'none', marginBottom: '4px', fontSize: '0.8rem' } }}>
+                <InputLabel id="status-label" shrink={false}>Status</InputLabel>
                 <Select
+                  labelId="status-label"
                   name="status"
                   value={formData.status}
                   onChange={handleChange}

@@ -9,32 +9,35 @@
 /* AppBar styles */
 .MuiAppBar-root {
   background-color: var(--primary-color) !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
 }
 
 .MuiToolbar-root {
   justify-content: space-between;
-  padding: 0.5rem 1rem !important;
+  padding: 0.75rem 1.5rem !important;
 }
 
 /* App title */
 .MuiTypography-root.app-title {
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-size: 1.75rem;
+  text-transform: uppercase;
 }
 
 /* Navigation buttons */
 .MuiButton-root {
   color: white !important;
-  font-weight: 500 !important;
-  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out !important;
-  margin-left: 0.5rem !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease-in-out !important;
+  margin-left: 1rem !important;
+  border-radius: 8px !important;
+  padding: 0.5rem 1rem !important;
 }
 
 .MuiButton-root:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  transform: translateY(-1px);
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  transform: translateY(-2px);
 }
 
 .MuiButton-root:active {
@@ -44,67 +47,102 @@
 /* Main content area */
 .main-content {
   flex-grow: 1;
-  padding: 2rem;
+  padding: 3rem;
   background-color: var(--background-color);
 }
 
 /* Job Applications title */
 .job-applications-title {
   text-align: center;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-  font-size: 2rem;
-  font-weight: bold;
+  margin-top: 1.5rem;
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  font-weight: 800;
   color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 /* Card styles */
 .MuiCard-root {
-  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  border-radius: var(--border-radius) !important;
+  overflow: hidden;
 }
 
 .MuiCard-root:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
 }
 
 /* Form styles */
 .MuiTextField-root, .MuiSelect-root {
-  margin-bottom: 1rem !important;
+  margin-bottom: 1.5rem !important;
 }
 
 /* Button styles */
 .MuiButton-containedPrimary {
   background-color: var(--primary-color) !important;
+  color: white !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
 }
 
 .MuiButton-containedPrimary:hover {
-  background-color: darken(var(--primary-color), 10%) !important;
+  background-color: #2980b9 !important; /* Darker shade of primary color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
 }
 
 .MuiButton-outlinedSecondary {
   color: var(--secondary-color) !important;
   border-color: var(--secondary-color) !important;
+  background-color: rgba(46, 204, 113, 0.1) !important;
+}
+
+.MuiButton-outlinedSecondary:hover {
+  background-color: rgba(46, 204, 113, 0.2) !important;
+  color: #27ae60 !important; /* Darker shade of secondary color */
 }
 
 .MuiButton-outlinedError {
   color: var(--accent-color) !important;
   border-color: var(--accent-color) !important;
+  background-color: rgba(231, 76, 60, 0.1) !important;
+}
+
+.MuiButton-outlinedError:hover {
+  background-color: rgba(231, 76, 60, 0.2) !important;
+  color: #c0392b !important; /* Darker shade of accent color */
+}
+
+/* VIEW and UPDATE buttons */
+.MuiButton-containedPrimary.view-button,
+.MuiButton-containedPrimary.update-button {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.MuiButton-containedPrimary.view-button:hover,
+.MuiButton-containedPrimary.update-button:hover {
+  background-color: #2980b9 !important; /* Darker shade of primary color */
+  color: white !important;
 }
 
 /* Card grid layout */
 .job-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
 }
 
 /* Card button container */
 .card-buttons {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 /* Responsive adjustments */
@@ -115,23 +153,28 @@
   }
 
   .MuiButton-root {
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
     margin-left: 0 !important;
   }
 
   .main-content {
-    padding: 1rem;
+    padding: 1.5rem;
   }
 
   .job-card-grid {
     grid-template-columns: 1fr;
   }
+
+  .job-applications-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
 }
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .fade-in {
@@ -140,18 +183,19 @@
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--primary-color);
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: darken(var(--primary-color), 10%);
+  background: #2980b9; /* Darker shade of primary color */
 }
