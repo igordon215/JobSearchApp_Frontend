@@ -187,3 +187,40 @@ input:focus, textarea:focus, select:focus {
 ::-webkit-scrollbar-thumb:hover {
   background: #2980b9; /* Darker shade of primary color */
 }
+
+/* Additional styles for Material-UI components */
+.MuiButton-root {
+  text-transform: none;
+}
+
+.MuiCard-root {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.MuiCard-root:hover {
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+}
+
+.MuiTextField-root, .MuiSelect-root {
+  margin-bottom: 16px;
+}
+
+/* Improved focus styles for accessibility */
+*:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Responsive font sizes for Material-UI components */
+@media (max-width: 600px) {
+  .MuiTypography-h4 {
+    font-size: 1.8rem;
+  }
+  .MuiTypography-h5 {
+    font-size: 1.5rem;
+  }
+  .MuiTypography-h6 {
+    font-size: 1.2rem;
+  }
+}
