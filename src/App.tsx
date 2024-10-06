@@ -14,26 +14,29 @@ const App: React.FC = () => {
           <Toolbar>
             <Grid container alignItems="center">
               <Grid item xs={4}>
-                <Typography variant="h6" component="div" className="app-title">
+                <Typography variant="h6" component="div" className="app-title" style={{ fontWeight: 'normal' }}>
                   Job Search Board
                 </Typography>
               </Grid>
-              <Grid item xs={4}>
-                <Grid container alignItems="center">
-                  <Grid item xs={4}>
-                    <Button component={Link} to="/" color="inherit">
-                      Home
-                    </Button>
-                  </Grid>
-                  <Grid item xs={4} style={{ textAlign: 'center' }}>
-                    <Button component={Link} to="/new" color="inherit">
-                      ADD NEW JOB
-                    </Button>
-                  </Grid>
-                  <Grid item xs={4}>
-                    {/* Empty grid item for balance */}
-                  </Grid>
+              <Grid item xs={4} container justifyContent="center" alignItems="center" spacing={2}>
+                <Grid item>
+                  <Button
+                    component={Link}
+                    to="/new"
+                    color="inherit"
+                    startIcon={<span style={{ fontSize: '1.2em' }}>+</span>}
+                  >
+                    ADD NEW JOB
+                  </Button>
                 </Grid>
+                <Grid item>
+                  <Button component={Link} to="/" color="inherit">
+                    Home
+                  </Button>
+                </Grid>
+              </Grid>
+              <Grid item xs={4}>
+                {/* Empty grid item for balance */}
               </Grid>
             </Grid>
           </Toolbar>
