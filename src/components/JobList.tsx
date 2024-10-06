@@ -46,13 +46,18 @@ const JobList: React.FC = () => {
 
   return (
     <Box sx={{ padding: '24px' }}>
-      <Typography variant="h4" component="h1" sx={{ textAlign: 'center', marginBottom: '24px', color: '#2196f3' }}>
+      <Typography 
+        variant="h4" 
+        component="h1" 
+        className="job-applications-title"
+        sx={{ marginBottom: '48px' }}
+      >
         Job Applications
       </Typography>
       <Box sx={{ 
         display: 'grid', 
         gridTemplateColumns: 'repeat(3, 1fr)', 
-        gap: '16px',
+        gap: '24px',
         justifyContent: 'center'
       }}>
         {jobApplications.map((job) => (
